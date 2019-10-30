@@ -1,0 +1,2 @@
+# SaleManager.Wpf
+SaleManagerWpf
