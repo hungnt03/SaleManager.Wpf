@@ -24,12 +24,12 @@ namespace SaleManager.Wpf.ViewModels
         {
             this.navigationService = navigationService;
             this.eventAggregator = eventAggregator;
+            this.eventAggregator.Subscribe(this);
             var client = new RestClient("https://localhost:44397");
             var request = new RestRequest("api/categories/getall", Method.GET);
             var queryResult = client.Execute<List<CategoryActivityViewModel>>(request).Data;
             Categories = new BindableCollection<ActivityBaseViewModel>(queryResult);
             detail = new CategoryDetailViewModel(eventAggregator);
-            
         }
         public ActivityBaseViewModel SelectedCategory
         {
@@ -37,7 +37,8 @@ namespace SaleManager.Wpf.ViewModels
             set 
             {
                 Set(ref selectedCategory, value);
-                navigationService.NavigateToViewModel(typeof(CategoryDetailViewModel));
+                NotifyOfPropertyChange(() => SelectedCategory);
+                navigationService.NavigateToViewModel<CategoryDetailViewModel>(detail);
                 eventAggregator.PublishOnUIThread(selectedCategory);
             }
         }

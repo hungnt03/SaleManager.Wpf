@@ -28,7 +28,6 @@ namespace SaleManager.Wpf
 
             container
                 .Singleton<IWindowManager, WindowManager>()
-                //.Singleton<NavViewModel, NavViewModel>()
                 .Singleton<IEventAggregator, EventAggregator>();
 
             container
@@ -36,6 +35,7 @@ namespace SaleManager.Wpf
                .PerRequest<MenuViewModel>()
                .PerRequest<LoginViewModel>()
                .PerRequest<CategoryViewModel>()
+               .PerRequest<CategoryDetailViewModel>()
                .PerRequest<ExecuteViewModel>();
                //.PerRequest<BindingsViewModel>()
                //.PerRequest<ActionsViewModel>()
@@ -50,6 +50,7 @@ namespace SaleManager.Wpf
 
         protected override void OnStartup(object sender, StartupEventArgs e)
         {
+            base.OnStartup(sender, e);
             DisplayRootViewFor<ShellViewModel>();
         }
 

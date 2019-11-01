@@ -13,9 +13,10 @@ namespace SaleManager.Wpf.ViewModels
         private readonly SimpleContainer container;
         private INavigationService navigationService;
 
-        public ShellViewModel(SimpleContainer container)
+        public ShellViewModel(SimpleContainer container, IEventAggregator eventag)
         {
             this.container = container;
+            eventag.Subscribe(this);
         }
 
         public void RegisterFrame(Frame frame)

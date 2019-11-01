@@ -9,10 +9,38 @@ namespace SaleManager.Wpf.ViewModels.Activity
 {
     public class CategoryActivityViewModel : ActivityBaseViewModel
     {
-        public int Id { set; get; }
-        public string Name { set; get; }
-        public string Description { set; get; }
+        private int id { set; get; }
+        private string name { set; get; }
+        private string description { set; get; }
 
         public override string Title => "category";
+        public string Description
+        {
+            get
+            { return description; }
+            set
+            {
+                this.description = value;
+                NotifyOfPropertyChange(() => Description);
+            }
+        }
+        public string Name
+        {
+            get { return name; }
+            set
+            {
+                this.name = value;
+                NotifyOfPropertyChange(() => Name);
+            }
+        }
+        public int Id
+        {
+            get { return id; }
+            set
+            {
+                this.id = value;
+                NotifyOfPropertyChange(() => Id);
+            }
+        }
     }
 }
