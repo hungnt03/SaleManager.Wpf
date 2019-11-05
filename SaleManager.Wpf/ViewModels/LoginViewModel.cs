@@ -1,4 +1,5 @@
 ﻿using Caliburn.Micro;
+using RestSharp;
 using SaleManager.Wpf.Models;
 using System;
 using System.Collections.Generic;
@@ -16,6 +17,8 @@ namespace SaleManager.Wpf.ViewModels
         public LoginViewModel(INavigationService navigationService)
         {
             this.navigationService = navigationService;
+            Username = "hungnt.hut56@gmail.com";
+            Password = "Root@123";
         }
         public string Username
         {
@@ -41,8 +44,16 @@ namespace SaleManager.Wpf.ViewModels
         //    return !String.IsNullOrEmpty(username) && !String.IsNullOrEmpty(password);
         //}
 
-        public void Login(string username, string password)
+        public void Login()
         {
+            var client = new RestClient("https://localhost:44312/");
+            var request = new RestRequest("api/user/login", Method.POST);
+            request.AddParameter("Email", Username);
+            request.AddParameter("Password", Password);
+            request.AddHeader("Content-Type", "application/json");
+            request.AddHeader("Accept", "application/json");
+            var queryResult = client.Execute<List<TokenModel>>(request).Data;
+            
             navigationService.NavigateToViewModel(typeof(MenuViewModel));
         }
     }

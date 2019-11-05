@@ -84,6 +84,8 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Inflastructors\Controls\BoundPasswordBox.cs" />
+    <Compile Include="Models\TokenModel.cs" />
     <Compile Include="ViewModels\Activity\CategoryActivityViewModel.cs" />
     <Compile Include="Models\Lipsum.cs" />
     <Compile Include="Models\ModelBase.cs" />
