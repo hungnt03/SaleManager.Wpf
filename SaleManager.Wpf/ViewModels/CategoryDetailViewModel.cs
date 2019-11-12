@@ -1,5 +1,6 @@
 ﻿using Caliburn.Micro;
-using RestSharp;
+using SaleManager.Wpf.Inflastructors;
+using SaleManager.Wpf.Models;
 using SaleManager.Wpf.ViewModels.Activity;
 using System;
 using System.Collections.Generic;
@@ -11,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace SaleManager.Wpf.ViewModels
 {
-    public class CategoryDetailViewModel : PropertyChangedBase, IHandle<ActivityBaseViewModel>
+    public class CategoryDetailViewModel : Screen, IHandle<ActivityBaseViewModel>
     {
         private readonly IEventAggregator eventAggregator;
         private string _submitCaption;
@@ -23,18 +24,30 @@ namespace SaleManager.Wpf.ViewModels
                 NotifyOfPropertyChange(() => _submitCaption);
             }
         }
-        private CategoryActivityViewModel _category;
-        public CategoryActivityViewModel Category
+        private CategoryModel _category { set; get; }
+        private string _name { set; get; }
+        public string Name
+        {
+            get { return _name; }
+            set
+            {
+                _name = value;
+                NotifyOfPropertyChange(() => Name);
+            }
+        }
+        public CategoryModel Category
         {
             get { return _category; }
             set
             {
-                if (_category == null)
-                    _category = new CategoryActivityViewModel();
-                _category.Id = value.Id;
-                _category.Name = value.Name;
-                _category.Description = value.Description;
+                //if (_category == null)
+                //    _category = new CategoryActivityViewModel();
+                //_category.Id = value.Id;
+                //_category.Name = value.Name;
+                //_category.Description = value.Description;
                 //OnPropertyChanged(new PropertyChangedEventArgs("Category"));
+                
+                _category = value;
                 NotifyOfPropertyChange(() => Category);
             }
         }
@@ -51,21 +64,26 @@ namespace SaleManager.Wpf.ViewModels
         {
             if(message.GetType() == typeof(CategoryActivityViewModel))
             {
-                var source = (CategoryActivityViewModel)message;
-                if (source.Id != 0)
-                    SubmitCaption = "Cập nhật";
-                else
-                    SubmitCaption = "Thêm mới";
-                var client = new RestClient("https://localhost:44397");
-                var request = new RestRequest("api/categories/getbyid/" + source.Id, Method.GET);
-                var queryResult = client.Execute<CategoryActivityViewModel>(request).Data;
-                Category = queryResult;
+                //var source = (CategoryActivityViewModel)message;
+                //if (source.Id != 0)
+                //    SubmitCaption = "Cập nhật";
+                //else
+                //    SubmitCaption = "Thêm mới";
+                //var client = new RestClient("https://localhost:44397");
+                //var request = new RestRequest("api/categories/getbyid/" + source.Id, Method.GET);
+                //var queryResult = client.Execute<CategoryActivityViewModel>(request).Data;
+                //Category = queryResult;
             }
         }
 
-        public void ShowText()
+        public void OnCreateCategory()
         {
-            Category = new CategoryActivityViewModel() { Id=100,Name="update",Description="des"};
+            var content = new Dictionary<string, string>{
+              { "Name", Category.Name },
+              { "Description", Category.Description },
+            };
+            var data = RestApiUtils.Instance.Post("api/category/add", content);
+            var a = 1;
         }
     }
 }

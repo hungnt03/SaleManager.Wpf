@@ -5,11 +5,17 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:SaleManager.Wpf.Views"
       xmlns:controls="clr-namespace:SaleManager.Wpf.Views.Activity"
+      xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
       Title="CategoryView">
 
     <DockPanel>
+        <Button DockPanel.Dock="Top" HorizontalAlignment="Right" Margin="0,5,10,5" x:Name="OnCreateCategory"
+            Style="{StaticResource MaterialDesignFloatingActionMiniAccentButton}" 
+            ToolTip="Thêm mới loại sản phẩm">
+            <materialDesign:PackIcon Kind="TooltipPlusOutline" Height="24" Width="24" />
+        </Button>
         <!--<controls:NavView DockPanel.Dock="Top"/>-->
         <!--<ContentControl x:Name="NavUC" DockPanel.Dock="Top"/>-->
         <ListBox x:Name="Categories"/>

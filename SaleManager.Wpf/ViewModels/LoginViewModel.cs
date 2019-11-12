@@ -1,9 +1,13 @@
 ﻿using Caliburn.Micro;
-using RestSharp;
+using Newtonsoft.Json;
+using SaleManager.Api.Models;
+using SaleManager.Wpf.Inflastructors;
 using SaleManager.Wpf.Models;
 using System;
 using System.Collections.Generic;
-using System.Linq;
+using System.Net;
+using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -14,6 +18,7 @@ namespace SaleManager.Wpf.ViewModels
         private readonly INavigationService navigationService;
         private string _username;
         private string _password;
+        static HttpClient client = new HttpClient();
         public LoginViewModel(INavigationService navigationService)
         {
             this.navigationService = navigationService;
@@ -44,16 +49,14 @@ namespace SaleManager.Wpf.ViewModels
         //    return !String.IsNullOrEmpty(username) && !String.IsNullOrEmpty(password);
         //}
 
-        public void Login()
+        public async void Login()
         {
-            var client = new RestClient("https://localhost:44312/");
-            var request = new RestRequest("api/user/login", Method.POST);
-            request.AddParameter("Email", Username);
-            request.AddParameter("Password", Password);
-            request.AddHeader("Content-Type", "application/json");
-            request.AddHeader("Accept", "application/json");
-            var queryResult = client.Execute<List<TokenModel>>(request).Data;
-            
+            //var data = new Dictionary<string, string>{
+            //  { "Email", this.Username },
+            //  { "Password", this.Password },
+            //};
+
+            var logged = await RestApiUtils.Instance.Login(this.Username, this.Password);
             navigationService.NavigateToViewModel(typeof(MenuViewModel));
         }
     }
